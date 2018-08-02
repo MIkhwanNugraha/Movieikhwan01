@@ -3,28 +3,27 @@ package com.dicoding.associate.cataloguemovie;
 import org.json.JSONObject;
 
 public class FilmItems {
-    private int id;
     private String nama;
     private String detail;
     private String tanggal;
     private String img;
 
-    private final static String POSTER_URL = "http://image.tmdb.org/t/p/w185";
+
 
     public FilmItems(JSONObject object){
 
         try {
-            int id = object.getInt("id");
-            String name = object.getString("name");
-            String detail = object.getJSONArray("film").getJSONObject(0).getString("detail");
-            String tanggal = object.getJSONArray("film").getJSONObject(0).getString("tanggal");
-            String img = object.getString("img");
+            String name = object.getString("title");
+            String detail = object.getString("overview");
+            String img = object.getString("poster_path");
+            String tanggal = object.getString("release_date");
 
-            this.id = id;
-            this.nama = name;;
+
+            this.nama = name;
             this.detail = detail;
             this.tanggal = tanggal;
             this.img = img;
+
 
         }catch (Exception e){
 
@@ -32,13 +31,7 @@ public class FilmItems {
         }
     }
 
-    public int getId(){
-        return id;
-    }
 
-    public void setId(int id){
-        this.id = id;
-    }
 
     public String getNama() {
         return nama;
@@ -71,4 +64,5 @@ public class FilmItems {
     public void setImg(String img) {
         this.img = img;
     }
+
 }

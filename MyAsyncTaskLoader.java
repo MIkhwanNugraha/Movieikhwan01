@@ -40,7 +40,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>>{
     }
 
     @Override
-    public void deliverResult(@Nullable final ArrayList<FilmItems> data){
+    public void deliverResult(ArrayList<FilmItems> data){
         mData = data;
         mHasResult = true;
         super.deliverResult(data);
@@ -59,7 +59,9 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>>{
 
     private static final String API_KEY = "5df38ae7b1c2fc4aa915020e359d7a52";
 
-    @Nullable
+    private void onReleaseResource(ArrayList<FilmItems> data){
+
+    }
     @Override
     public ArrayList<FilmItems> loadInBackground(){
         SyncHttpClient client = new SyncHttpClient();
@@ -79,13 +81,11 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>>{
                 try {
                     String result = new String(responseBody);
                     JSONObject responseObject = new JSONObject(result);
-                    JSONArray list = responseObject.getJSONArray("list");
+                    JSONArray list = responseObject.getJSONArray("results");
 
                     for (int i = 0 ; i < list.length() ; i++){
                         JSONObject film = list.getJSONObject(i);
                         FilmItems filmItems = new FilmItems(film);
-                        Log.d("LIST", "on success :" + filmItems.getNama());
-                        Log.d("LIST", "on success :" + filmItems.getDetail());
                         filmItemses.add(filmItems);
                     }
                 }catch (Exception e){
@@ -101,8 +101,6 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<ArrayList<FilmItems>>{
 
         return filmItemses;
     }
-    protected void onReleaseResource(ArrayList<FilmItems> data){
 
-    }
 
 }
